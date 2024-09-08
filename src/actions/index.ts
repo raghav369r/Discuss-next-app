@@ -1,5 +1,8 @@
 "use server";
 import * as auth from "@/auth";
+import { createTopic } from "./create-topic";
+import { createPost } from "./create-post";
+import { createComment } from "./create-comment";
 
 export const signIn = async () => {
   //   will get provider as parameter
@@ -9,6 +12,4 @@ export const signOut = async () => {
   return auth.signOut();
 };
 
-// export { createComment } from "@/actions/create-comment";
-// export { createPost } from "@/actions/create-post";
-// export { createTopic } from "@/actions/create-topic";
+export { createTopic, createComment, createPost };

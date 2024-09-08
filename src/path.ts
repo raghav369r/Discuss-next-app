@@ -4,7 +4,7 @@
 
 const paths = {
   home: () => "/",
-  topicShow: (topicSlug: string) => `/${topicSlug}`,
+  topicShow: (topicSlug: string) => `/topic/${topicSlug}`,
   postCreate: (topicSlug: string) => `/${topicSlug}/posts/new`,
   postShow: (topicSlug: string, postId: string) =>
     `/${topicSlug}/posts/${postId}`,
