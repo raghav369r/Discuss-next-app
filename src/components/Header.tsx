@@ -6,13 +6,17 @@ import {
   Input,
 } from "@nextui-org/react";
 import AuthContent from "./AuthContent";
+import Link from "next/link";
+import paths from "@/path";
 
 type Props = {};
 
 const Header = async (props: Props) => {
   return (
-    <Navbar>
-      <NavbarBrand>Discuss</NavbarBrand>
+    <Navbar className="shadow-md mb-4">
+      <NavbarBrand className="cursor-pointer">
+        <Link href={paths.home()}>Discuss</Link>
+      </NavbarBrand>
       <NavbarContent justify="center">
         <NavbarItem>
           <Input />

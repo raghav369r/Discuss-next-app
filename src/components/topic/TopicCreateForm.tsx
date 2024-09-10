@@ -10,20 +10,14 @@ import {
 } from "@nextui-org/react";
 import { createTopic } from "@/actions";
 import { useFormState } from "react-dom";
+import FormButton from "../common/FormButton";
 
 type Props = {};
 
-type formDataType = {
-  name?: string[];
-  description?: string[];
-  _formErrors?: string[];
-};
-
 const TopicCreateForm = (props: Props) => {
-  const [fieldErrors, createTopicAction] = useFormState<formDataType>(
-    createTopic,
-    {}
-  );
+  const [fieldErrors, createTopicAction] = useFormState(createTopic, {
+    error: {},
+  });
   return (
     <Popover placement="left-start">
       <PopoverTrigger>
@@ -40,10 +34,10 @@ const TopicCreateForm = (props: Props) => {
             name="topicName"
             labelPlacement="outside"
             placeholder="Name of topic"
-            isInvalid={!!fieldErrors?.["name"]?.length}
-            errorMessage={fieldErrors?.["name"]?.join(", ")}
+            isInvalid={!!fieldErrors.error?.["name"]?.length}
+            errorMessage={fieldErrors.error?.["name"]?.join(", ")}
           />
-          {/* {fieldErrors?.["name"]?.map((msg: string, ind: number) => (
+          {/* {fieldErrors.error?.["name"]?.map((msg: string, ind: number) => (
             <DisplayError msg={msg} />
           ))} */}
           <Textarea
@@ -51,19 +45,19 @@ const TopicCreateForm = (props: Props) => {
             name="description"
             labelPlacement="outside"
             placeholder="Description of topic"
-            isInvalid={!!fieldErrors?.["description"]?.length}
-            errorMessage={fieldErrors?.["description"]?.join(", ")}
+            isInvalid={!!fieldErrors.error?.["description"]?.length}
+            errorMessage={fieldErrors.error?.["description"]?.join(", ")}
           />
-          {/* {fieldErrors?.["description"]?.map((msg: string, ind: number) => (
+          {/* {fieldErrors.error?.["description"]?.map((msg: string, ind: number) => (
             <DisplayError msg={msg} />
           ))} */}
 
-          {fieldErrors?.["_formErrors"]?.map((msg: string, ind: number) => (
-            <DisplayError msg={msg} />
-          ))}
-          <Button type="submit" color="primary">
-            Create
-          </Button>
+          {fieldErrors.error?.["_formErrors"]?.map(
+            (msg: string, ind: number) => (
+              <DisplayError msg={msg} />
+            )
+          )}
+          <FormButton>Create</FormButton>
         </form>
       </PopoverContent>
     </Popover>

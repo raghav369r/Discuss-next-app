@@ -18,9 +18,11 @@ const createTopicSchema = z.object({
 });
 
 interface formDataType {
-  name?: string[] | undefined;
-  description?: string[] | undefined;
-  _formErrors?: string[] | undefined;
+  error: {
+    name?: string[] | undefined;
+    description?: string[] | undefined;
+    _formErrors?: string[] | undefined;
+  };
 }
 
 export const createTopic = async (
@@ -32,11 +34,11 @@ export const createTopic = async (
   const res = createTopicSchema.safeParse({ name: topicName, description });
   const session = await auth();
   if (!session?.user) {
-    return { _formErrors: ["Must be logged in to create topic."] };
+    return { error: { _formErrors: ["Must be logged in to create topic."] } };
   }
   if (!res.success) {
     const errors = res.error?.flatten().fieldErrors || {};
-    return errors;
+    return { error: { ...errors } };
   }
   try {
     await prisma.topic.create({
@@ -44,9 +46,9 @@ export const createTopic = async (
     });
   } catch (err: unknown) {
     if (err instanceof Error) {
-      return { _formErrors: [err.message] };
+      return { error: { _formErrors: [err.message] } };
     }
-    return { _formErrors: ["Some unknown error occured!"] };
+    return { error: { _formErrors: ["Some unknown error occured!"] } };
   }
   revalidatePath(paths.home());
   redirect(paths.topicShow(res.data.name));

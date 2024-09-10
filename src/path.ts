@@ -5,8 +5,8 @@
 const paths = {
   home: () => "/",
   topicShow: (topicSlug: string) => `/topic/${topicSlug}`,
-  postCreate: (topicSlug: string) => `/${topicSlug}/posts/new`,
+  postCreate: (topicSlug: string) => `/topic/${topicSlug}/posts/new`,
   postShow: (topicSlug: string, postId: string) =>
-    `/${topicSlug}/posts/${postId}`,
+    `/topic/${topicSlug}/posts/${postId}`,
 };
 export default paths;
