@@ -1,7 +1,11 @@
 import prisma from "@/DB";
 import React from "react";
-import { PostView } from "../../page";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import paths from "@/path";
+import { PostView } from "@/components/post/PostView";
+import CommentCreateForm from "@/components/comment/CommentCreateForm";
+import CommentList from "@/components/comment/CommentList";
 
 type Props = {
   params: {
@@ -16,7 +20,19 @@ const PostShow = async (props: Props) => {
     where: { id: postId },
   });
   if (!post) return notFound();
-  return <PostView post={post} slug={slug} />;
+  return (
+    <div>
+      <Link
+        href={paths.topicShow(slug)}
+        className="cursor-pointer underline font-semibold"
+      >
+        {"<"} Back to {slug}
+      </Link>
+      <PostView postId={postId} />
+      <CommentCreateForm postId={postId} slug={slug} parentId={null} showInit />
+      <CommentList postId={postId} />
+    </div>
+  );
 };
 
 export default PostShow;

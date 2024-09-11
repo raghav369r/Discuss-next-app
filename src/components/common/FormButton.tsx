@@ -5,13 +5,25 @@ import { useFormStatus } from "react-dom";
 
 type Props = {
   children: React.ReactNode;
+  color?:
+    | "primary"
+    | "default"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "danger";
 };
 
-const FormButton = (props: Props) => {
+const FormButton = ({ children, color }: Props) => {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" color="primary" isLoading={pending}>
-      {props.children}
+    <Button
+      type="submit"
+      color={color || "default"}
+      isLoading={pending}
+      className="px-4 w-fit"
+    >
+      {children}
     </Button>
   );
 };

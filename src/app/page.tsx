@@ -1,7 +1,7 @@
+import { PostView } from "@/components/post/PostView";
 import TopicCreateForm from "@/components/topic/TopicCreateForm";
 import TopicList from "@/components/topic/TopicList";
 import prisma from "@/DB";
-import { PostView } from "./topic/[slug]/page";
 
 type Props = {};
 
@@ -13,7 +13,7 @@ const Home = async (props: Props) => {
         <h1 className="text-xl">Top Topics</h1>
         <div className="p-4 flex flex-col gap-3">
           {topPosts.map((post) => (
-            <PostView post={post} key={post.id} slug="python" />
+            <PostView postId={post.id} key={post.id} />
           ))}
         </div>
       </div>

@@ -53,7 +53,7 @@ const PostCreateForm = (props: Props) => {
 
           {fieldErrors.error?.["_formErrors"]?.map(
             (msg: string, ind: number) => (
-              <DisplayError msg={msg} />
+              <DisplayError key={ind} msg={msg} />
             )
           )}
           <FormButton>Create</FormButton>
