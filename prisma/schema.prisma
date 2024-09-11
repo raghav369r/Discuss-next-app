@@ -3,13 +3,14 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -27,15 +28,15 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -47,6 +48,7 @@ model User {
 }
 
 model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   identifier String
   token      String   @unique
   expires    DateTime
@@ -55,7 +57,7 @@ model VerificationToken {
 }
 
 model Topic {
-  id          String @id @default(cuid())
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   slug        String @unique
   description String
   posts       Post[]
@@ -65,11 +67,11 @@ model Topic {
 }
 
 model Post {
-  id      String @id @default(cuid())
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
   title   String
   content String
-  userId  String
-  topicId String
+  userId  String @db.ObjectId
+  topicId String @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -80,16 +82,16 @@ model Post {
 }
 
 model Comment {
-  id       String  @id @default(cuid())
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   content  String
-  postId   String
-  userId   String
-  parentId String?
+  postId   String  @db.ObjectId
+  userId   String  @db.ObjectId
+  parentId String? @db.ObjectId
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  parent   Comment?  @relation("Comments", fields: [parentId], references: [id], onDelete: Cascade)
+  parent   Comment?  @relation("Comments", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   post     Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   children Comment[] @relation("Comments")

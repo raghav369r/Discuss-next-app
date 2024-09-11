@@ -16,7 +16,6 @@ const TopicShow = async (props: Props) => {
         <div className="flex flex-col gap-3 p-4">
           <PostList
             fetchData={() => fetchPostWithUserBySlug(slug)}
-            slug={slug}
           />
         </div>
       </div>

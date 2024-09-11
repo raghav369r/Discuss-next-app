@@ -4,17 +4,16 @@ import Link from "next/link";
 import paths from "@/path";
 
 type Props = {
-  slug: string;
   fetchData: () => Promise<postWithData[]>;
 };
 
-const PostList = async ({ fetchData, slug }: Props) => {
+const PostList = async ({ fetchData }: Props) => {
   const posts = await fetchData();
   return (
     <div className="flex flex-col gap-3">
       {posts.map((post) => (
         <Link
-          href={paths.postShow(slug, post.id)}
+          href={paths.postShow(post.topic.slug, post.id)}
           key={post.id}
           className="p-2 border rounded cursor-pointer"
         >

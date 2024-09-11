@@ -13,7 +13,7 @@ type Props = {};
 
 const Header = async (props: Props) => {
   return (
-    <Navbar className="shadow-md mb-4">
+    <Navbar className="shadow-md mb-4 ">
       <NavbarBrand className="cursor-pointer">
         <Link href={paths.home()}>Discuss</Link>
       </NavbarBrand>

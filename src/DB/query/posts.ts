@@ -19,3 +19,15 @@ export const fetchPostWithUserBySlug = async (
     },
   });
 };
+
+export const fetchTopPosts = async (): Promise<postWithData[]> => {
+  return await prisma.post.findMany({
+    include: {
+      topic: { select: { slug: true } },
+      user: { select: { name: true } },
+      _count: { select: { comments: true } },
+    },
+    take: 10,
+    orderBy: { createdAt: "desc" },
+  });
+};
