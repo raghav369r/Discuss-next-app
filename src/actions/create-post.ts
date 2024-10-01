@@ -64,6 +64,7 @@ export const createPost = async (
     return { error: { _formErrors: ["Some unknown error occured!"] } };
   }
   revalidatePath(paths.topicShow(res.data.title));
+  // revalidatePath(paths.home());
   redirect(paths.postShow(slug, post.id));
   // revalidate to title show
 };
